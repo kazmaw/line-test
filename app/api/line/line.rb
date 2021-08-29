@@ -3,6 +3,7 @@ module Line
     version 'v1', using: :header, vendor: 'line'
     format :json
     prefix :api
+
     # helpers do
     #   def current_user
     #     @current_user ||= User.authorize!(env)
