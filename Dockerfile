@@ -8,12 +8,13 @@ apt-get update && apt-get install -y yarn
 # Node.jsをインストール
 RUN curl -sL https://deb.nodesource.com/setup_7.x | bash - && \
 apt-get install nodejs
-RUN mkdir /myapp
-WORKDIR /myapp
-COPY Gemfile /myapp/Gemfile
-COPY Gemfile.lock /myapp/Gemfile.lock
+RUN mkdir /app
+WORKDIR /app
+COPY Gemfile /app
+COPY Gemfile.lock /app
 RUN bundle install
-COPY . /myapp
+COPY . /app
+
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
