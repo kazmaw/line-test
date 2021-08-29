@@ -1,5 +1,11 @@
+require 'grape_logging'
+
 module Line
   class API < Grape::API
+    use GrapeLogging::Middleware::RequestLogger,
+    instrumentation_key: 'grape_key',
+    include: [ GrapeLogging::Loggers::Response.new,
+              GrapeLogging::Loggers::FilterParameters.new ]
     version 'v1', using: :header, vendor: 'line'
     format :json
     prefix :api
