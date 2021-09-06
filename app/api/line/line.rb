@@ -5,7 +5,8 @@ module Line
     use GrapeLogging::Middleware::RequestLogger,
     instrumentation_key: 'grape_key',
     include: [ GrapeLogging::Loggers::Response.new,
-              GrapeLogging::Loggers::FilterParameters.new ]
+              GrapeLogging::Loggers::FilterParameters.new
+              GrapeLogging::Loggers::RequestHeaders.new ]
     version 'v1', using: :header, vendor: 'line'
     format :json
     prefix :api
