@@ -42,8 +42,8 @@ module Line
         end
       end
       post do
-        Rails.logger.info @parmas[:replyToken]
-        Rails.logger.info @parmas[:replyToken].to_s
+        Rails.logger.info @parmas["replyToken"]
+        Rails.logger.info @parmas["replyToken"].to_s
         User.all
       end
     end
