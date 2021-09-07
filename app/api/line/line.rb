@@ -22,10 +22,28 @@ module Line
     # end
 
     resource :messaging do
-      desc "user test"
+      desc "LINE Messaging API Webhook"
+      params do
+        requires :destination, type: String
+        requires :events, type: Array do
+          requires :type, type: String
+          optional :message, type: Hash do
+            optional :type, type: String
+            optional :id, type: String
+            optional :text, type: String
+          end
+          optional :timestamp, type: Integer
+          optional :source, type: Hash do
+            optional :type, type: String
+            optional :userId, type: String
+          end
+          optional :replyToken, type: String
+          optional :mode, type: String
+        end
+      end
       post do
-        Rails.logger.info parmas[:replyToken]
-        Rails.logger.info parmas[:replyToken].to_s
+        Rails.logger.info @parmas[:replyToken]
+        Rails.logger.info @parmas[:replyToken].to_s
         User.all
       end
     end
