@@ -43,7 +43,7 @@ module Line
       # end
       post do
         Rails.logger.info '-----'
-        Rails.logger.info @params[:replyToken]
+        Rails.logger.info request.body.read
         User.all
       end
     end
