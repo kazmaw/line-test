@@ -11,37 +11,38 @@ module Line
     format :json
     prefix :api
 
-    # helpers do
-    #   def current_user
-    #     @current_user ||= User.authorize!(env)
-    #   end
 
-    #   def authenticate!
-    #     error!('401 Unauthorized', 401) unless current_user
-    #   end
-    # end
+    helpers do
+      def authorize!
+        signature = request.env['HTTP_X_LINE_SIGNATURE']
+        unless line_client.validate_signature(request_body, signature)
+          error!('401 Unauthorized', 401)
+        end
+      end
+    end
 
     resource :messaging do
       desc "LINE Messaging API Webhook"
-      # params do
-      #   requires :destination, type: String
-      #   requires :events, type: Array do
-      #     requires :type, type: String
-      #     optional :message, type: Hash do
-      #       optional :type, type: String
-      #       optional :id, type: String
-      #       optional :text, type: String
-      #     end
-      #     optional :timestamp, type: Integer
-      #     optional :source, type: Hash do
-      #       optional :type, type: String
-      #       optional :userId, type: String
-      #     end
-      #     optional :replyToken, type: String
-      #     optional :mode, type: String
-      #   end
-      # end
+      params do
+        requires :destination, type: String
+        requires :events, type: Array do
+          requires :type, type: String
+          optional :message, type: Hash do
+            optional :type, type: String
+            optional :id, type: String
+            optional :text, type: String
+          end
+          optional :timestamp, type: Integer
+          optional :source, type: Hash do
+            optional :type, type: String
+            optional :userId, type: String
+          end
+          optional :replyToken, type: String
+          optional :mode, type: String
+        end
+      end
       post do
+        authorize!
         Rails.logger.info '-----'
         Rails.logger.info request.body.read
         User.all
