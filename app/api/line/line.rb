@@ -1,7 +1,7 @@
 require 'grape_logging'
 
 module Line
-  class API < Grape::API
+  class Line < Grape::API
     use GrapeLogging::Middleware::RequestLogger,
     instrumentation_key: 'grape_key',
     include: [ GrapeLogging::Loggers::Response.new,
@@ -19,6 +19,7 @@ module Line
           error!('401 Unauthorized', 401)
         end
       end
+
       def line_client
         @line_client ||= Line::Bot::Client.new do |config|
           config.channel_id = Rails.application.credentials.line.channel_id
