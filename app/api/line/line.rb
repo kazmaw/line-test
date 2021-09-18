@@ -19,6 +19,17 @@ module Line
           error!('401 Unauthorized', 401)
         end
       end
+      def line_client
+        @line_client ||= Line::Bot::Client.new do |config|
+          config.channel_id = Rails.application.credentials.line.channel_id
+          config.channel_secret = Rails.application.credentials.line.channel_secret
+          config.channel_token = Rails.application.credentials.line.channel_token
+        end
+      end
+
+      def request_body
+        request.body.read
+      end
     end
 
     resource :messaging do

@@ -13,6 +13,8 @@ services:
       - "3000:3000"
     depends_on:
       - db
+    environment:
+      - EDITOR=vim
     volumes: &app_volumes
       - .:/app
       - bundle:/app/vendor/bundle
