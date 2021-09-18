@@ -28,6 +28,9 @@ gem 'jbuilder', '~> 2.7'
 gem 'grape'
 gem 'grape_logging'
 
+# for LINE Messaging API
+gem 'line-bot-api'
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
 
