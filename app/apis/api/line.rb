@@ -61,10 +61,9 @@ module API
           when Line::Bot::Event::Message
             case event.type
             when Line::Bot::Event::MessageType::Text
-              scenario = self_client.scenario
               message = {
                 type: 'text',
-                text: 'testシナリオです。'
+                text: event
               }
               line_client.reply_message(event['replyToken'], message)
             end
