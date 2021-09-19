@@ -68,7 +68,7 @@ module API
                   "type":"message",
                   "label":"Yes",
                   "text":"Yes"
-                }
+                },
                 "style": "primary",
                 "color": "#0000ff"
               }
