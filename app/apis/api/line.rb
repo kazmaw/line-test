@@ -56,6 +56,7 @@ module API
       post do
         authorize!
         events = line_client.parse_events_from(params.to_json)
+        Rails.logger.info events
         events.each do |event|
           case event
           when ::Line::Bot::Event::Message
@@ -63,7 +64,7 @@ module API
             when ::Line::Bot::Event::MessageType::Text
               message = {
                 type: 'text',
-                text: event
+                text: event['text']
               }
               line_client.reply_message(event['replyToken'], message)
             end
