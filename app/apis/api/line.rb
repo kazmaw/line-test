@@ -15,8 +15,6 @@ module API
     helpers do
       def authorize!
         signature = request.env['HTTP_X_LINE_SIGNATURE']
-        Rails.logger.info "CR: #{Rails.application.credentials}"
-        Rails.logger.info "CR2: #{Rails.application.credentials.line}"
         unless line_client.validate_signature(request_body, signature)
           error!('401 Unauthorized', 401)
         end
@@ -37,27 +35,41 @@ module API
 
     resource :messaging do
       desc "LINE Messaging API Webhook"
-      # params do
-      #   requires :destination, type: String
-      #   requires :events, type: Array do
-      #     requires :type, type: String
-      #     optional :message, type: Hash do
-      #       optional :type, type: String
-      #       optional :id, type: String
-      #       optional :text, type: String
-      #     end
-      #     optional :timestamp, type: Integer
-      #     optional :source, type: Hash do
-      #       optional :type, type: String
-      #       optional :userId, type: String
-      #     end
-      #     optional :replyToken, type: String
-      #     optional :mode, type: String
-      #   end
-      # end
+      params do
+        requires :destination, type: String
+        requires :events, type: Array do
+          requires :type, type: String
+          optional :message, type: Hash do
+            optional :type, type: String
+            optional :id, type: String
+            optional :text, type: String
+          end
+          optional :timestamp, type: Integer
+          optional :source, type: Hash do
+            optional :type, type: String
+            optional :userId, type: String
+          end
+          optional :replyToken, type: String
+          optional :mode, type: String
+        end
+      end
       post do
         authorize!
-        User.all
+        events = line_client.parse_events_from(request_body)
+        events.each do |event|
+          case event
+          when Line::Bot::Event::Message
+            case event.type
+            when Line::Bot::Event::MessageType::Text
+              scenario = self_client.scenario
+              message = {
+                type: 'text',
+                text: 'testシナリオです。'
+              }
+              line_client.reply_message(event['replyToken'], message)
+            end
+          end
+        end
       end
     end
   end
