@@ -2,15 +2,15 @@ require 'grape_logging'
 
 module API
   class Line < Grape::API
-    version 'v1', using: :path, vendor: 'line'
+    version 'v1', using: :header, vendor: 'line'
     format :json
+    prefix :api
 
     use GrapeLogging::Middleware::RequestLogger,
     instrumentation_key: 'grape_key',
     include: [ GrapeLogging::Loggers::Response.new,
               GrapeLogging::Loggers::FilterParameters.new,
               GrapeLogging::Loggers::RequestHeaders.new ]
-
 
     helpers do
       def authorize!
@@ -21,10 +21,10 @@ module API
       end
 
       def line_client
-        @line_client ||= Line::Bot::Client.new do |config|
-          config.channel_id = Rails.application.credentials.line.channel_id
-          config.channel_secret = Rails.application.credentials.line.channel_secret
-          config.channel_token = Rails.application.credentials.line.channel_token
+        @line_client ||= ::Line::Bot::Client.new do |config|
+          config.channel_id = Rails.application.credentials.line[:channel_id]
+          config.channel_secret = Rails.application.credentials.line[:channel_secret]
+          config.channel_token = Rails.application.credentials.line[:channel_token]
         end
       end
 
