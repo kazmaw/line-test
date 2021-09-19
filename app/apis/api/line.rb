@@ -55,7 +55,7 @@ module API
       end
       post do
         authorize!
-        events = line_client.parse_events_from(request_body)
+        events = line_client.parse_events_from(params.to_json)
         events.each do |event|
           case event
           when Line::Bot::Event::Message
