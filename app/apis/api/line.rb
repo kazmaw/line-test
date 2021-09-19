@@ -83,7 +83,8 @@ module API
                         "type": "message",
                         "label": "はい",
                         "text": "はい"
-                      }
+                      },
+                      "style": "primary"
                     },
                     {
                       "type": "button",
@@ -91,9 +92,16 @@ module API
                         "type": "message",
                         "label": "いいえ",
                         "text": "いいえ"
-                      }
+                      },
+                      "style": "primary",
+                      "margin": "sm"
                     }
                   ]
+                },
+                "styles": {
+                  "header": {
+                    "separator": false
+                  }
                 }
               }
               Rails.logger.info message
