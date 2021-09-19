@@ -58,9 +58,9 @@ module API
         events = line_client.parse_events_from(params.to_json)
         events.each do |event|
           case event
-          when Line::Bot::Event::Message
+          when ::Line::Bot::Event::Message
             case event.type
-            when Line::Bot::Event::MessageType::Text
+            when ::Line::Bot::Event::MessageType::Text
               message = {
                 type: 'text',
                 text: event
