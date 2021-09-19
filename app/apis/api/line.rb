@@ -61,17 +61,17 @@ module API
           when ::Line::Bot::Event::Message
             case event.type
             when ::Line::Bot::Event::MessageType::Text
-              Rails.logger.info event
               message = {
                 "type": "button",
                 "action": {
-                  "type":"message",
-                  "label":"Yes",
-                  "text":"Yes"
+                  "type": "message",
+                  "label": "Yes",
+                  "text": "Yes"
                 },
                 "style": "primary",
                 "color": "#0000ff"
               }
+              Rails.logger.info message
               line_client.reply_message(event['replyToken'], message)
             end
           end
