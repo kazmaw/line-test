@@ -62,28 +62,36 @@ module API
             case event.type
             when ::Line::Bot::Event::MessageType::Text
               message = {
-                "type": "template",
-                "altText": "This is a buttons template",
-                "template": {
-                  "type": "buttons",
-                  "imageBackgroundColor": "#FFFFFF",
-                  "title": "Menu",
-                  "text": "Please select",
-                  "actions": [
+                "type": "bubble",
+                "body": {
+                  "type": "box",
+                  "layout": "vertical",
+                  "contents": [
                     {
-                      "type": "message",
-                      "label": "test message 1",
-                      "text": "test message 1"
+                      "type": "text",
+                      "text": "元気ですか？"
+                    }
+                  ]
+                },
+                "footer": {
+                  "type": "box",
+                  "layout": "horizontal",
+                  "contents": [
+                    {
+                      "type": "button",
+                      "action": {
+                        "type": "message",
+                        "label": "はい",
+                        "text": "はい"
+                      }
                     },
                     {
-                      "type": "message",
-                      "label": "test message 2",
-                      "text": "test message 2"
-                    },
-                    {
-                      "type": "message",
-                      "label": "test message 3",
-                      "text": "test message 3"
+                      "type": "button",
+                      "action": {
+                        "type": "message",
+                        "label": "いいえ",
+                        "text": "いいえ"
+                      }
                     }
                   ]
                 }
