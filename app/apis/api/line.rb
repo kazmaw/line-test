@@ -15,8 +15,8 @@ module API
     helpers do
       def authorize!
         signature = request.env['HTTP_X_LINE_SIGNATURE']
-        Rails.logger.info "CR: #{Rails.application.credentials.line}"
-        Rails.logger.info "CR2: #{Rails.application.credentials.line[:channel_id]}"
+        Rails.logger.info "CR: #{Rails.application.credentials}"
+        Rails.logger.info "CR2: #{Rails.application.credentials.line}"
         unless line_client.validate_signature(request_body, signature)
           error!('401 Unauthorized', 401)
         end
