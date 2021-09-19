@@ -15,8 +15,9 @@ module API
     helpers do
       def authorize!
         signature = request.env['HTTP_X_LINE_SIGNATURE']
-        Rails.logger.info "test: #{line_client.validate_signature(request_body, signature)}"
-        unless line_client.validate_signature(request_body, signature)
+        flg = line_client.validate_signature(request_body, signature)
+        Rails.logger.info "test: #{flg}"
+        unless flg
           error!('401 Unauthorized', 401)
         end
       end
