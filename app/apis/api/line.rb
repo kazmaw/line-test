@@ -62,45 +62,48 @@ module API
             case event.type
             when ::Line::Bot::Event::MessageType::Text
               message = {
-                "type": "bubble",
-                "body": {
-                  "type": "box",
-                  "layout": "vertical",
-                  "contents": [
-                    {
-                      "type": "text",
-                      "text": "元気ですか？"
-                    }
-                  ]
-                },
-                "footer": {
-                  "type": "box",
-                  "layout": "horizontal",
-                  "contents": [
-                    {
-                      "type": "button",
-                      "action": {
-                        "type": "message",
-                        "label": "はい",
-                        "text": "はい"
+                "type": "flex",
+                "contents": {
+                  "type": "bubble",
+                  "body": {
+                    "type": "box",
+                    "layout": "vertical",
+                    "contents": [
+                      {
+                        "type": "text",
+                        "text": "元気ですか？"
+                      }
+                    ]
+                  },
+                  "footer": {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                      {
+                        "type": "button",
+                        "action": {
+                          "type": "message",
+                          "label": "はい",
+                          "text": "はい"
+                        },
+                        "style": "primary"
                       },
-                      "style": "primary"
-                    },
-                    {
-                      "type": "button",
-                      "action": {
-                        "type": "message",
-                        "label": "いいえ",
-                        "text": "いいえ"
-                      },
-                      "style": "primary",
-                      "margin": "sm"
+                      {
+                        "type": "button",
+                        "action": {
+                          "type": "message",
+                          "label": "いいえ",
+                          "text": "いいえ"
+                        },
+                        "style": "primary",
+                        "margin": "sm"
+                      }
+                    ]
+                  },
+                  "styles": {
+                    "header": {
+                      "separator": false
                     }
-                  ]
-                },
-                "styles": {
-                  "header": {
-                    "separator": false
                   }
                 }
               }
