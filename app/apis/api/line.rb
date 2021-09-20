@@ -63,6 +63,7 @@ module API
             when ::Line::Bot::Event::MessageType::Text
               message = {
                 "type": "flex",
+                "altText": "This is a Flex Message",
                 "contents": {
                   "type": "bubble",
                   "body": {
