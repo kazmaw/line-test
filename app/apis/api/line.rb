@@ -62,36 +62,34 @@ module API
             case event.type
             when ::Line::Bot::Event::MessageType::Text
               message = {
-                {
-                  "type": "text",
-                  "text": "Select your favorite food category or send me your location!",
-                  "quickReply": {
-                    "items": [
-                      {
-                        "type": "action",
-                        "action": {
-                          "type": "message",
-                          "label": "Sushi",
-                          "text": "Sushi"
-                        }
-                      },
-                      {
-                        "type": "action",
-                        "action": {
-                          "type": "message",
-                          "label": "Tempura",
-                          "text": "Tempura"
-                        }
-                      },
-                      {
-                        "type": "action",
-                        "action": {
-                          "type": "location",
-                          "label": "Send location"
-                        }
+                "type": "text",
+                "text": "Select your favorite food category or send me your location!",
+                "quickReply": {
+                  "items": [
+                    {
+                      "type": "action",
+                      "action": {
+                        "type": "message",
+                        "label": "Sushi",
+                        "text": "Sushi"
                       }
-                    ]
-                  }
+                    },
+                    {
+                      "type": "action",
+                      "action": {
+                        "type": "message",
+                        "label": "Tempura",
+                        "text": "Tempura"
+                      }
+                    },
+                    {
+                      "type": "action",
+                      "action": {
+                        "type": "location",
+                        "label": "Send location"
+                      }
+                    }
+                  ]
                 }
               }
               Rails.logger.info message
