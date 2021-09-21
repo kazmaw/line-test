@@ -32,7 +32,7 @@ module API
         request.body.read
       end
 
-      def message_action(label: '', text: '')
+      def message_action(label = '', text = '')
         {
           "type": "action",
           "action": {
