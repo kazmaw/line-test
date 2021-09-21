@@ -62,49 +62,35 @@ module API
             case event.type
             when ::Line::Bot::Event::MessageType::Text
               message = {
-                "type": "flex",
-                "altText": "This is a Flex Message",
-                "contents": {
-                  "type": "bubble",
-                  "body": {
-                    "type": "box",
-                    "layout": "vertical",
-                    "contents": [
+                {
+                  "type": "text",
+                  "text": "Select your favorite food category or send me your location!",
+                  "quickReply": {
+                    "items": [
                       {
-                        "type": "text",
-                        "text": "元気ですか？"
-                      }
-                    ]
-                  },
-                  "footer": {
-                    "type": "box",
-                    "layout": "horizontal",
-                    "contents": [
-                      {
-                        "type": "button",
+                        "type": "action",
                         "action": {
                           "type": "message",
-                          "label": "はい",
-                          "text": "はい"
-                        },
-                        "style": "primary"
+                          "label": "Sushi",
+                          "text": "Sushi"
+                        }
                       },
                       {
-                        "type": "button",
+                        "type": "action",
                         "action": {
                           "type": "message",
-                          "label": "いいえ",
-                          "text": "いいえ"
-                        },
-                        "style": "primary",
-                        "margin": "sm"
+                          "label": "Tempura",
+                          "text": "Tempura"
+                        }
+                      },
+                      {
+                        "type": "action",
+                        "action": {
+                          "type": "location",
+                          "label": "Send location"
+                        }
                       }
                     ]
-                  },
-                  "styles": {
-                    "header": {
-                      "separator": false
-                    }
                   }
                 }
               }
