@@ -105,7 +105,6 @@ module API
                 uri_action('SELF MIND', 'https://self.software/'),
                 message_action('どれも興味ない', '14_LINE_興味ない')
               ]
-              Rails.logger.info message
               line_client.reply_message(event['replyToken'], message(text, answers))
             end
           end
