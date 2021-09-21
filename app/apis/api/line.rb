@@ -43,9 +43,28 @@ module API
         }
       end
 
+      def uri_action(label = '', uri = '')
+        {
+          "type": "action",
+          "action": {
+            "type": "uri",
+            "label": label,
+            "uri": uri
+          }
+        }
+      end
+
       def quick_reply(items = [])
         {
           "items": items
+        }
+      end
+
+      def message(text, items)
+        {
+          "type": "text",
+          "text": text,
+          "quickReply": quick_reply(items)
         }
       end
     end
@@ -78,17 +97,16 @@ module API
           when ::Line::Bot::Event::Message
             case event.type
             when ::Line::Bot::Event::MessageType::Text
-              items = [
-                message_action('sushi', 'sushi'),
-                message_action('tempura', 'tempura')
+              text = '興味のあるサービスはどれですか？'
+              answers = [
+                uri_action('SELF LINK', 'https://self.systems/selflink/'),
+                uri_action('SELF TALK', 'https://self.systems/selftalk/'),
+                uri_action('SELF APP', 'https://selfmind.ai/ja/'),
+                uri_action('SELF MIND', 'https://self.software/'),
+                message_action('どれも興味ない', '14_LINE_興味ない')
               ]
-              message = {
-                "type": "text",
-                "text": "すきな食べ物はなんですか？",
-                "quickReply": quick_reply(items)
-              }
               Rails.logger.info message
-              line_client.reply_message(event['replyToken'], message)
+              line_client.reply_message(event['replyToken'], message(text, answers))
             end
           end
         end
