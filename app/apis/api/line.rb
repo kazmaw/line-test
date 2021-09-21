@@ -31,6 +31,23 @@ module API
       def request_body
         request.body.read
       end
+
+      def message_action(label: '', text: '')
+        {
+          "type": "action",
+          "action": {
+            "type": "message",
+            "label": label,
+            "text": text
+          }
+        }
+      end
+
+      def quick_reply(items = [])
+        {
+          "items": items
+        }
+      end
     end
 
     resource :messaging do
@@ -61,36 +78,14 @@ module API
           when ::Line::Bot::Event::Message
             case event.type
             when ::Line::Bot::Event::MessageType::Text
+              items = [
+                message_action('sushi', 'sushi'),
+                message_action('tempura', 'tempura')
+              ]
               message = {
                 "type": "text",
-                "text": "Select your favorite food category or send me your location!",
-                "quickReply": {
-                  "items": [
-                    {
-                      "type": "action",
-                      "action": {
-                        "type": "message",
-                        "label": "Sushi",
-                        "text": "Sushi"
-                      }
-                    },
-                    {
-                      "type": "action",
-                      "action": {
-                        "type": "message",
-                        "label": "Tempura",
-                        "text": "Tempura"
-                      }
-                    },
-                    {
-                      "type": "action",
-                      "action": {
-                        "type": "location",
-                        "label": "Send location"
-                      }
-                    }
-                  ]
-                }
+                "text": "すきな食べ物はなんですか？",
+                "quickReply": quick_reply(items)
               }
               Rails.logger.info message
               line_client.reply_message(event['replyToken'], message)
