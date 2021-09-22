@@ -6,7 +6,7 @@
 # upは1行の操作なのでここには入れません。
 # 前提条件
 #   - 環境変更用のスクリプト(change_env.sh)が同じ階層で実行できる状態になっていること
-#   - docker-sync導入済みであること
+#   - docker-sync導入済みであること(多分なくても動く。エラーは出るけど)
 #
 usage() {
   cat <<EOM
@@ -36,11 +36,14 @@ clean() {
 }
 
 install() {
+  docker-sync start
   docker compose run app bundle install --path vendor/bundle --clean
   docker compose run app yarn install
 }
 
 migrate() {
+  ./change_env.sh develop
+  docker-sync sync
   docker compose run app bin/rails db:create db:migrate
   docker compose run app bin/rails db:migrate RAILS_ENV=test
 }
@@ -57,8 +60,14 @@ init() {
   build
 }
 
+setup() {
+  install
+  migrate
+}
+
 start() {
   docker-sync start
+  docker compose run app rm -rf node_modules/.cache/hard-source/
   docker compose up -d
 }
 
@@ -69,6 +78,7 @@ case $1 in
   "migrate") migrate ;;
   "build")   build ;;
   "init")    init ;;
+  "setup")   setup ;;
   "start")   start ;;
   "-h"|"--help"|*) usage ;;
 esac
