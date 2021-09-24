@@ -103,8 +103,9 @@ module API
                 uri_action('SELF TALK', 'https://self.systems/selftalk/'),
                 uri_action('SELF APP', 'https://selfmind.ai/ja/'),
                 uri_action('SELF MIND', 'https://self.software/'),
-                message_action('どれも興味ない', '14_LINE_興味ない')
+                message_action('14_LINE_興味ない', 'どれも興味ない')
               ]
+              Rails.logger.info event
               line_client.reply_message(event['replyToken'], message(text, answers))
             end
           end
